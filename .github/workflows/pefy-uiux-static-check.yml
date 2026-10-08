@@ -1,0 +1,26 @@
+name: PEFY-GG UIUX Adapter Static Check
+
+on:
+  pull_request:
+    paths:
+      - 'AGENTS.md'
+      - 'PEFY-GG-INTEGRATION.md'
+      - '.agents/skills/ui-ux-pro-max/**'
+      - 'scripts/verify_pefy_uiux.py'
+      - '.github/workflows/pefy-uiux-static-check.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  static-adapter-check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Checkout
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          persist-credentials: false
+      - name: Read-only packaging validation
+        run: python3 scripts/verify_pefy_uiux.py
